@@ -7,6 +7,11 @@ class CustomTheme {
   late ThemeData darkTheme;
 }
 
+const Color ktertiarycolor = Color(0xff006875);
+const Color ksecondaryColor = Color(0xffdf96b1);
+const Color kPrimaryColor = Color(0xff0277bd);
+const Color kredPinkColor = Color(0xFF970231);
+
 class CustomThemeBlue extends CustomTheme {
   @override
   ThemeData get lightTheme {
@@ -44,9 +49,6 @@ class CustomThemeBlue extends CustomTheme {
       // fontFamily: GoogleFonts.karla().fontFamily,
       // fontFamily: GoogleFonts.muktaVaani().fontFamily,
       // fontFamily: GoogleFonts.koHo().fontFamily,
-
-
-
     );
   }
 
