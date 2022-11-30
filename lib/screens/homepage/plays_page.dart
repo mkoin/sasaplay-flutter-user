@@ -2,10 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'package:get_it/get_it.dart';
+import 'package:sasa_play/helpers/load_network_image.dart';
 import 'package:sasa_play/models/data/video.dart';
 import 'package:sasa_play/models/feed_view_model.dart';
 import 'package:sasa_play/screens/widgets/actions_tool_bar.dart';
 import 'package:sasa_play/screens/widgets/play_profile_desc.dart';
+import 'package:sasa_play/utils/custom_themes_colors.dart';
+import 'package:sasa_play/utils/size_config.dart';
 import 'package:stacked/stacked.dart';
 import 'package:video_player/video_player.dart';
 
@@ -76,32 +79,57 @@ class _FeedScreenState extends State<FeedsPage> {
                 gradient: LinearGradient(
                     begin: Alignment.topCenter,
                     end: Alignment.bottomCenter,
-                    colors: [Colors.black26, Color(0x00000000)]))),
+                    colors: [
+                  Color.fromARGB(31, 60, 60, 60),
+                  Color(0x00000000)
+                ]))),
       ],
     );
   }
 
   Widget videoCard(Video video) {
+    final controller = video.controller!;
     return Stack(
       children: [
         video.controller != null
-            ? GestureDetector(
-                onTap: () {
-                  if (video.controller!.value.isPlaying) {
-                    video.controller?.pause();
-                  } else {
-                    video.controller?.play();
-                  }
-                },
-                child: SizedBox.expand(
-                    child: FittedBox(
-                  fit: BoxFit.cover,
-                  child: SizedBox(
-                    width: video.controller?.value.size.width ?? 0,
-                    height: video.controller?.value.size.height ?? 0,
-                    child: VideoPlayer(video.controller!),
+            ? SizedBox.expand(
+                child: FittedBox(
+                  fit: BoxFit.contain,
+                  child: Center(
+                    child: SizedBox(
+                      height: SizeConfig.screenHeight,
+                      width: SizeConfig.screenWidth,
+                      child: Stack(
+                        alignment: Alignment.center,
+                        children: <Widget>[
+                          video.controller!.value.isInitialized
+                              ? AspectRatio(
+                                  aspectRatio:
+                                      video.controller!.value.aspectRatio / 1.2,
+                                  child: VideoPlayer(video.controller!),
+                                )
+                              : Center(
+                                  child: LoadPhotoViewImage(
+                                  imageProvider: NetworkImage(video.userPic),
+                                )),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 35),
+                            child: PlayPauseOverlay(controller: controller),
+                          ),
+                          // Padding(
+                          //   padding: EdgeInsets.only(
+                          //       bottom: getProportionalScreenHeight(80)),
+                          //   child: Align(
+                          //     alignment: Alignment.bottomCenter,
+                          //     child: VideoProgressIndicator(controller,
+                          //         allowScrubbing: true),
+                          //   ),
+                          // ),
+                        ],
+                      ),
+                    ),
                   ),
-                )),
+                ),
               )
             : Container(
                 color: Colors.black,
@@ -117,7 +145,12 @@ class _FeedScreenState extends State<FeedsPage> {
               crossAxisAlignment: CrossAxisAlignment.end,
               children: <Widget>[
                 ProfileDescription(video.user),
-                ActionsToolbar(video.likes, video.comments, video.songName),
+                Padding(
+                  padding:
+                      EdgeInsets.only(bottom: getProportionalScreenHeight(70)),
+                  child: ActionsToolbar(
+                      video.likes, video.comments, video.songName),
+                ),
               ],
             ),
             const SizedBox(height: 100)
@@ -131,5 +164,71 @@ class _FeedScreenState extends State<FeedsPage> {
   void dispose() {
     feedViewModel.controller?.dispose();
     super.dispose();
+  }
+}
+
+class PlayPauseOverlay extends StatefulWidget {
+  const PlayPauseOverlay({Key? key, required this.controller})
+      : super(key: key);
+
+  final VideoPlayerController controller;
+
+  @override
+  State<PlayPauseOverlay> createState() => _PlayPauseOverlayState();
+}
+
+class _PlayPauseOverlayState extends State<PlayPauseOverlay>
+    with TickerProviderStateMixin {
+  late bool _visible = false;
+
+  late AnimationController _controller;
+
+  @override
+  void initState() {
+    _controller = AnimationController(
+        duration: const Duration(milliseconds: 450), vsync: this);
+    super.initState();
+  }
+
+  // Dispose the controller
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      children: <Widget>[
+        AnimatedOpacity(
+          opacity: _visible ? 1.0 : 0.0,
+          duration: const Duration(milliseconds: 650),
+          child: Center(
+            child: AnimatedIcon(
+              icon: AnimatedIcons.play_pause,
+              progress: _controller,
+              size: 90,
+              color: kPrimaryColor,
+            ),
+          ),
+        ),
+        GestureDetector(
+          onTap: () async {
+            if (widget.controller.value.isPlaying) {
+              await widget.controller.pause(); //pause on tap
+              _visible = true;
+              await _controller.reverse();
+            } else {
+              await widget.controller.play(); //play on tap
+              _visible = false;
+              await _controller.forward();
+            }
+            //update icon visibility.
+            setState(() {});
+          },
+        ),
+      ],
+    );
   }
 }
