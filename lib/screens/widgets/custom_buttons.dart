@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:like_button/like_button.dart';
 import 'package:sasa_play/helpers/fonts_functions.dart';
+import 'package:sasa_play/helpers/loadAssetImage.dart';
 import 'package:sasa_play/utils/custom_themes_colors.dart';
 import 'package:sasa_play/utils/size_config.dart';
 
@@ -101,6 +104,7 @@ class FollowUnfollowButton extends StatelessWidget {
   final double height;
 
   final VoidCallback onPressed;
+  final bool? isLoading;
 
   final bool isfollow;
   final double? fontSize;
@@ -109,6 +113,7 @@ class FollowUnfollowButton extends StatelessWidget {
     Key? key,
     required this.onPressed,
     this.isfollow = false,
+    this.isLoading = false,
     this.borderRadius,
     this.fontSize,
     this.width,
@@ -120,9 +125,11 @@ class FollowUnfollowButton extends StatelessWidget {
     final borderRadius = this.borderRadius ??
         BorderRadius.circular(getProportionalScreenWidth(16));
     return InkWell(
-      onTap: () {
-        onPressed();
-      },
+      onTap: isLoading ?? false
+          ? null
+          : () {
+              onPressed();
+            },
       child: Material(
         elevation: 3,
         borderRadius: borderRadius,
@@ -142,7 +149,6 @@ class FollowUnfollowButton extends StatelessWidget {
                     colors: [
                       kredPinkColor.withAlpha(100),
                       kredPinkColor.withAlpha(90),
-                      // Color.fromARGB(255, 244, 245, 246),
                     ],
                   )
                 : const LinearGradient(
@@ -155,23 +161,80 @@ class FollowUnfollowButton extends StatelessWidget {
                   ),
             borderRadius: borderRadius,
           ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              Text(
-                isfollow ? "Follow" : "UnFollow",
-                style: krubik(
-                  color: isfollow ? Colors.black : kredPinkColor,
+          child: isLoading ?? false
+              ? const SpinKitDoubleBounce(
+                  color: kredPinkColor,
+                  size: 50.0,
+                )
+              : Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Text(
+                      isfollow ? "Follow" : "UnFollow",
+                      style: krubik(
+                        color: isfollow ? Colors.black : kredPinkColor,
 
-                  //  ktertiarycolor,
-                  fontWeight: FontWeight.w500,
-                  fontSize: fontSize,
+                        //  ktertiarycolor,
+                        fontWeight: FontWeight.w500,
+                        fontSize: fontSize,
+                      ),
+                    ),
+                  ],
                 ),
-              ),
-            ],
-          ),
         ),
       ),
     );
   }
+}
+
+Widget likeContentWidget(
+    {required int likesCount,
+    required bool isLiked,
+    required Function onLike}) {
+  return SizedBox(
+    child: Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: LikeButton(
+        animationDuration: const Duration(milliseconds: 800),
+        countPostion: CountPostion.bottom,
+        size: getProportionalScreenWidth(35),
+        circleColor:
+            const CircleColor(start: kPrimaryColor, end: ktertiarycolor),
+        bubblesColor: const BubblesColor(
+          dotPrimaryColor: Color(0xff33b5e5),
+          dotSecondaryColor: kredPinkColor,
+          dotThirdColor: ktertiarycolor,
+        ),
+        onTap: (islike) async {
+          onLike;
+          return !islike;
+        },
+        isLiked: isLiked,
+        likeCount: likesCount,
+        likeBuilder: (bool hasLiked) {
+          return SizedBox(
+            width: 60.0,
+            height: 60.0,
+            child: loadImage(
+              imageUrl: hasLiked
+                  ? "assets/images/heart.png"
+                  : "assets/images/heart2.png",
+            ),
+          );
+        },
+        countBuilder: (int? likeCount, bool isApplauded, String? text) {
+          return Text(
+            likeCount.toString(),
+            overflow: TextOverflow.ellipsis,
+            style: const TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.w700,
+              fontFamily: 'FjallaOne',
+              fontSize: 12,
+            ),
+          );
+        },
+      ),
+    ),
+  );
 }
