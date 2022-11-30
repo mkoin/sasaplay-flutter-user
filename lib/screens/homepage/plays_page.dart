@@ -105,7 +105,7 @@ class _FeedScreenState extends State<FeedsPage> {
               )
             : Container(
                 color: Colors.black,
-                child: Center(
+                child: const Center(
                   child: Text("Loading"),
                 ),
               ),
@@ -116,12 +116,11 @@ class _FeedScreenState extends State<FeedsPage> {
               mainAxisSize: MainAxisSize.max,
               crossAxisAlignment: CrossAxisAlignment.end,
               children: <Widget>[
-                //VideoDescription(video.user, video.videoTitle, video.songName),
                 ProfileDescription(video.user),
                 ActionsToolbar(video.likes, video.comments, video.songName),
               ],
             ),
-            SizedBox(height: 100)
+            const SizedBox(height: 100)
           ],
         ),
       ],

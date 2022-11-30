@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:sasa_play/helpers/fonts_functions.dart';
 import 'package:sasa_play/helpers/load_network_image.dart';
+import 'package:sasa_play/helpers/refactoredWidgets.dart';
+import 'package:sasa_play/screens/widgets/custom_buttons.dart';
 import 'package:sasa_play/utils/app_constants.dart';
+import 'package:sasa_play/utils/custom_themes_colors.dart';
+import 'package:sasa_play/utils/size_config.dart';
 
 class ProfileDescription extends StatelessWidget {
   // Full dimensions of an action
@@ -24,13 +29,11 @@ class ProfileDescription extends StatelessWidget {
                 Container(
                   margin: const EdgeInsets.only(left: 1.0, bottom: 10),
                   child: Column(children: const [
-             
                     Icon(
                       Icons.monetization_on_outlined,
                       size: 20.0,
                       color: Colors.white,
                     ),
-
                     Text("Tip",
                         style: TextStyle(
                             fontSize: 14,
@@ -64,22 +67,13 @@ class ProfileDescription extends StatelessWidget {
                                 const SizedBox(
                                   width: 7,
                                 ),
-                                SizedBox(
-                                  height: 20.0,
-                                  child: ElevatedButton(
-                                      style: ElevatedButton.styleFrom(
-                                        primary:
-                                            const Color.fromRGBO(242, 242, 242, 1),
-                                      ),
-                                      child: const Text("Follow",
-                                          style: TextStyle(
-                                              fontSize: 12,
-                                              color: Color.fromRGBO(
-                                                  212, 175, 55, 1),
-                                              fontWeight: FontWeight.normal,
-                                              fontFamily: 'FjallaOne')),
-                                      onPressed: () {}),
-                                ),
+                                FollowUnfollowButton(
+                                  height: getProportionalScreenHeight(29),
+                                  width: getProportionalScreenWidth(80),
+                                  // fontSize: getProportionalScreenWidth(18),
+                                  onPressed: () {},
+                                  isfollow: false,
+                                )
                               ],
                             ),
                             const SizedBox(
@@ -105,7 +99,8 @@ class ProfileDescription extends StatelessWidget {
     return Positioned(
       left: (ActionWidgetSize / 2) - (ProfileImageSize / 2),
       child: Container(
-        padding: const EdgeInsets.all(1.0), // Add 1.0 point padding to create border
+        padding:
+            const EdgeInsets.all(1.0), // Add 1.0 point padding to create border
         height: ProfileImageSize, // ProfileImageSize = 50.0;
         width: ProfileImageSize, // ProfileImageSize = 50.0;
         decoration: BoxDecoration(
@@ -113,9 +108,10 @@ class ProfileDescription extends StatelessWidget {
             borderRadius: BorderRadius.circular(ProfileImageSize / 2)),
         // import 'package:cached_network_image/cached_network_image.dart'; at the top to use CachedNetworkImage
         child: ClipRRect(
-          borderRadius: BorderRadius.circular(10000.0),
-          child: LoadPhotoViewImage(imageProvider: NetworkImage(userPic),)
-        ),
+            borderRadius: BorderRadius.circular(10000.0),
+            child: LoadPhotoViewImage(
+              imageProvider: NetworkImage(userPic),
+            )),
       ),
     );
   }
