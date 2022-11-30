@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-
+import 'package:like_button/like_button.dart';
+import 'package:sasa_play/helpers/loadAssetImage.dart';
+import 'package:sasa_play/screens/widgets/custom_buttons.dart';
 
 class ActionsToolbar extends StatefulWidget {
   static const double ActionWidgetSize = 50.0;
@@ -29,24 +31,30 @@ class _ActionsToolbarState extends State<ActionsToolbar> {
   Widget build(BuildContext context) {
     return Container(
       width: 100.0,
-      child: Column(mainAxisSize: MainAxisSize.min, children: [
-        //_getFollowAction(pictureUrl: userPic),
-
-        _getSocialAction(icon: FontAwesomeIcons.crown, title: "Challenge"),
-        _getSocialAction(
-            icon: FontAwesomeIcons.signLanguage, title: widget.numLikes),
-        _getSocialAction(
-            icon: FontAwesomeIcons.commentAlt, title: widget.numComments),
-     
-        Text(widget.songName,
-            style: const TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.w300,
-                fontFamily: 'FjallaOne',
-                fontSize: 10.0)),
-        _getSocialAction(
-            icon: FontAwesomeIcons.share, title: 'Share', isShare: true),
-      ]),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          likeContentWidget(
+            likesCount: int.parse(widget.numLikes),
+            isLiked: widget.numLikes.length >= 1000,
+            onLike: () {},
+          ),
+          GestureDetector(
+            onTap: () {},
+            child: _getSocialAction(
+              icon: loadImage(imageUrl: "assets/images/comment.png"),
+              title: widget.numComments,
+            ),
+          ),
+          GestureDetector(
+            onTap: () {},
+            child: _getSocialAction(
+              icon: loadImage(imageUrl: "assets/images/watch.png"),
+              title: "Watch",
+            ),
+          ),
+        ],
+      ),
     );
   }
 
@@ -54,29 +62,20 @@ class _ActionsToolbarState extends State<ActionsToolbar> {
 
   Widget _getSocialAction({
     required String title,
-    required IconData icon,
-    bool isShare = false,
-    Color? color,
+    required Widget icon,
   }) {
     return InkWell(
-      onTap: () {
-        if (icon == Icons.favorite) {
-          setState(() {
-            isLike = !isLike;
-          });
-        }
-      },
+      onTap: () {},
       child: Container(
-          margin: EdgeInsets.only(top: 15.0),
+          margin: const EdgeInsets.only(top: 15.0),
           width: 60.0,
           height: 60.0,
           child: Column(children: [
-            FaIcon(icon,
-                size: 30, color: color == null ? Colors.grey.shade300 : color),
+            icon,
             Padding(
-              padding: EdgeInsets.only(top: isShare ? 8.0 : 8.0),
+              padding: const EdgeInsets.only(top: 8.0),
               child: Text(title,
-                  style: TextStyle(
+                  style: const TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.w300,
                       fontFamily: 'FjallaOne',
@@ -91,7 +90,7 @@ class _ActionsToolbarState extends State<ActionsToolbar> {
         Colors.grey[900]!,
         Colors.grey[900]!,
         Colors.grey[800]!
-      ], stops: [
+      ], stops: const [
         0.0,
         0.4,
         0.6,
@@ -100,20 +99,20 @@ class _ActionsToolbarState extends State<ActionsToolbar> {
 
   Widget _getMusicPlayerAction() {
     return Container(
-      margin: EdgeInsets.only(top: 10.0),
+      margin: const EdgeInsets.only(top: 10.0),
       width: ActionsToolbar.ActionWidgetSize,
       height: ActionsToolbar.ActionWidgetSize,
       child: Column(
         children: [
           Container(
-              padding: EdgeInsets.all(1.0),
+              padding: const EdgeInsets.all(1.0),
               height: ActionsToolbar.ProfileImageSize,
               width: ActionsToolbar.ProfileImageSize,
               decoration: BoxDecoration(
                   gradient: musicGradient,
                   borderRadius: BorderRadius.circular(
                       ActionsToolbar.ProfileImageSize / 2)),
-              child: Icon(
+              child: const Icon(
                 Icons.music_note_rounded,
                 color: Colors.white,
               )),
