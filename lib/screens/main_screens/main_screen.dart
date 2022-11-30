@@ -7,6 +7,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 import 'package:sasa_play/screens/homepage/homepage.dart';
 import 'package:sasa_play/screens/profile/main_user_profile.dart';
+import 'package:sasa_play/screens/settings/main_settings.dart';
 import 'package:sasa_play/utils/app_constants.dart';
 import 'package:sasa_play/utils/auth_manager.dart';
 import 'package:sasa_play/utils/size_config.dart';
@@ -25,11 +26,8 @@ class _MainScreenState extends State<MainScreen> {
 
   final List<Widget> _pages = [
     const HomePage(),
-    const HomePage(),
-
-    // const Explore(),
-    // const NotificatonDefaultView(),
     const MyProfileMainPage(),
+    const SettingsMainPage()
   ];
 
   var totalCoins = 0;
@@ -54,21 +52,17 @@ class _MainScreenState extends State<MainScreen> {
     SizeConfig().init(context);
     return Scaffold(
       resizeToAvoidBottomInset: true,
-
-      
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       extendBody: true,
       bottomNavigationBar: ConvexAppBar(
         style: TabStyle.flip,
         items: const [
           TabItem(icon: Icons.home, title: 'Home'),
-         
           TabItem(icon: Icons.people, title: 'Profile'),
           TabItem(icon: Icons.settings, title: 'Settings'),
         ],
         onTap: (int i) => onNavTapped(i),
       ),
-
       body: _pages[_currentPage],
     );
   }
