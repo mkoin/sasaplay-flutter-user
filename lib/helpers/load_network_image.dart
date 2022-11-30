@@ -4,7 +4,7 @@ import 'package:photo_view/photo_view.dart';
 import 'package:sasa_play/utils/size_config.dart';
 
 class LoadPhotoViewImage extends StatelessWidget {
-  const LoadPhotoViewImage({
+  const LoadPhotoViewImage({super.key, 
     this.imageProvider,
     this.loadingBuilder,
     this.backgroundDecoration,
@@ -54,7 +54,7 @@ class LoadPhotoViewImage extends StatelessWidget {
             return Column(
               mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.center,
-              children: [Icon(Icons.error)],
+              children: const [Icon(Icons.error)],
             );
           },
         ),
