@@ -52,10 +52,9 @@ class LoadPhotoViewImage extends StatelessWidget {
           disableGestures: disableGestures,
           errorBuilder: (context, object, stacktrace) {
             return Column(
-              children: [
-                Icon(Icons.error),
-                Text("Error loading image")
-              ],
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [Icon(Icons.error)],
             );
           },
         ),
