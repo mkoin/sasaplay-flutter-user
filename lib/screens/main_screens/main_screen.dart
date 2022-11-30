@@ -55,6 +55,7 @@ class _MainScreenState extends State<MainScreen> {
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       extendBody: true,
       bottomNavigationBar: ConvexAppBar(
+        backgroundColor: Theme.of(context).primaryColor,
         style: TabStyle.flip,
         items: const [
           TabItem(icon: Icons.home, title: 'Home'),

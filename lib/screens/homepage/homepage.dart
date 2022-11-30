@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sasa_play/screens/homepage/plays_page.dart';
+import 'package:sasa_play/utils/custom_themes_colors.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -31,18 +32,19 @@ class _HomeState extends State<HomePage>
             ),
             TabBar(
               labelStyle: TextStyle(
-                  fontSize: 20.0,
-                  fontFamily: 'FjallaOne',
-                  color: Color(0xFFFFFFFF)), //For Selected tab
+                fontSize: 20.0,
+                fontFamily: 'FjallaOne',
+                color: kredPinkColor,
+              ), //For Selected tab
               unselectedLabelStyle: TextStyle(
                   fontSize: 17.0,
                   fontFamily: 'FjallaOne',
                   color: Color(0x99FFFFFF)), //For Un-selected Tabs
-              indicatorColor: Colors.transparent,
+              indicatorColor: kredPinkColor,
               isScrollable: true,
               padding: EdgeInsets.zero,
               indicatorPadding: EdgeInsets.zero,
-              labelPadding: EdgeInsets.only(left: 18),
+              // labelPadding: EdgeInsets.only(left: 18),
               tabs: [
                 Tab(text: "Plays"),
                 Tab(text: "LIVE"),

@@ -29,17 +29,17 @@ class ProfileDescription extends StatelessWidget {
                 Container(
                   margin: const EdgeInsets.only(left: 1.0, bottom: 10),
                   child: Column(children: const [
-                    Icon(
-                      Icons.monetization_on_outlined,
-                      size: 20.0,
-                      color: Colors.white,
-                    ),
-                    Text("Tip",
-                        style: TextStyle(
-                            fontSize: 14,
-                            color: Colors.white,
-                            fontWeight: FontWeight.w300,
-                            fontFamily: 'FjallaOne'))
+                    // Icon(
+                    //   Icons.monetization_on_outlined,
+                    //   size: 20.0,
+                    //   color: Colors.white,
+                    // ),
+                    // Text("Tip",
+                    //     style: TextStyle(
+                    //         fontSize: 14,
+                    //         color: Colors.white,
+                    //         fontWeight: FontWeight.w300,
+                    //         fontFamily: 'FjallaOne'))
                   ]),
                 ),
                 Row(
@@ -72,7 +72,8 @@ class ProfileDescription extends StatelessWidget {
                                   width: getProportionalScreenWidth(80),
                                   // fontSize: getProportionalScreenWidth(18),
                                   onPressed: () {},
-                                  isfollow: false,
+                                  isfollow: true,
+                                  isLoading: false,
                                 )
                               ],
                             ),

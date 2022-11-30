@@ -39,20 +39,6 @@ class _SettingsMainPageState extends State<SettingsMainPage> {
             vertical: getProportionalScreenHeight(5)),
         child: ListView(
           children: [
-            FollowUnfollowButton(
-              height: getProportionalScreenHeight(29),
-              width: getProportionalScreenWidth(80),
-              // fontSize: getProportionalScreenWidth(18),
-              onPressed: () {},
-              isfollow: false,
-            ),
-            FollowUnfollowButton(
-              height: getProportionalScreenHeight(29),
-              width: getProportionalScreenWidth(80),
-              // fontSize: getProportionalScreenWidth(18),
-              onPressed: () {},
-              isfollow: true,
-            ),
             ListTile(
               title: const Text("Change theme"),
               subtitle: const Text("Toggle between dark and light theme"),
