@@ -22,7 +22,7 @@ var data = [
     "likes": "4583",
     "song_name": "Song 3 - Artist 3",
     "user": "User 3",
-    "user_pic": testImageUrl2
+    "user_pic": testImageUrl
   },
   {
     "id": "3",

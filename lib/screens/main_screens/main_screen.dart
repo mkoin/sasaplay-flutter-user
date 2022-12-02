@@ -36,8 +36,7 @@ class _MainScreenState extends State<MainScreen> {
   void initState() {
     _authenticationManager.checkLoginStatus();
     isLoggedIn = _authenticationManager.isLogged.value;
-    log("log in status: $isLoggedIn");
-
+  
     super.initState();
   }
 
@@ -56,6 +55,8 @@ class _MainScreenState extends State<MainScreen> {
       extendBody: true,
       bottomNavigationBar: ConvexAppBar(
         backgroundColor: Theme.of(context).primaryColor,
+        color: Theme.of(context).backgroundColor,
+        activeColor: Theme.of(context).canvasColor,
         style: TabStyle.flip,
         items: const [
           TabItem(icon: Icons.home, title: 'Home'),

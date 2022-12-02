@@ -13,9 +13,9 @@ class ProfileDescription extends StatelessWidget {
   // The size of the profile image in the follow Action
   static const double ProfileImageSize = 50.0;
 
-  final username;
+  final username ;
 
-  ProfileDescription(this.username);
+  const ProfileDescription(this.username, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -44,9 +44,7 @@ class ProfileDescription extends StatelessWidget {
                 ),
                 Row(
                   children: [
-                    _getProfilePicture(
-                        userPic:
-                            "https://www.andersonsobelcosmetic.com/wp-content/uploads/2018/09/chin-implant-vs-fillers-best-for-improving-profile-bellevue-washington-chin-surgery.jpg"),
+                    _getProfilePicture(userPic: testImageUrl),
                     Container(
                       padding: const EdgeInsets.symmetric(horizontal: 10.35),
                       child: Column(

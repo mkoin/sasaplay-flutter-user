@@ -13,6 +13,11 @@ class _MyProfileMainPageState extends State<MyProfileMainPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: const Text("Profile"),
+        centerTitle: true,
+      ),
+
 
     );
   }
